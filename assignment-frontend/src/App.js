@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
+import { Container, TextField, Select, MenuItem, Box } from "@mui/material";
 
 function App() {
 
@@ -18,20 +19,14 @@ function App() {
 
   const handleEdit = (assignment) => {
     setEditingAssignment(assignment);
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+    window.scrollTo({top: 0, behavior: "smooth" });
   };
 
   const loadData = () => {
-    getAssignments()
-      .then(res => setAssignments(res.data))
-      .catch(err => console.error(err));
+    getAssignments().then(res => setAssignments(res.data)).catch(err => console.error(err));
   };
 
-  useEffect(() => {
-    loadData();
+  useEffect(() => {    loadData();
   }, []);
 
   // DELETE HANDLER
@@ -67,29 +62,27 @@ function App() {
   });
 
   return (
-    <div>
-      <h1 style={{ textAlign: "center", marginTop: "20px" }}>
-         Assignment Manager
-      </h1>
+    <Container maxWidth="md">
+      <Box textAlign="center" mt={4} mb={3}>
+        <h1>Assignment Manager</h1>
+      </Box>
 
-      <div style={{ padding: "20px" }}>
-        <input
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={{ marginRight: "10px", padding: "5px" }}
-        />
+      <Box
+        display="flex"
+        gap={2}
+        justifyContent="center"
+        alignItems="center"
+        mb={3}
+      >
+        <TextField label="Search" variant="outlined" size="small" style={{ width: "250px" }} value={search} onChange={(e) => setSearch(e.target.value)}/>
 
-        <select
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
-        >
-          <option value="ALL">All</option>
-          <option value="TODO">TODO</option>
-          <option value="IN_PROGRESS">IN_PROGRESS</option>
-          <option value="COMPLETED">COMPLETED</option>
-        </select>
-      </div>
+        <Select value={filterStatus} size="small" onChange={(e) => setFilterStatus(e.target.value)}>
+          <MenuItem value="ALL">All</MenuItem>
+          <MenuItem value="TODO">TODO</MenuItem>
+          <MenuItem value="IN_PROGRESS">IN_PROGRESS</MenuItem>
+          <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+        </Select>
+      </Box>
 
       <Dashboard assignments={assignments} />
 
@@ -107,23 +100,18 @@ function App() {
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
 
-        <DialogContent>
-          Are you sure you want to delete{" "}
+        <DialogContent> Are you sure you want to delete{" "}
           <b>{selectedAssignment?.title}</b>?
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>
-            Cancel
-          </Button>
+          <Button onClick={() => setOpenDialog(false)}> Cancel </Button>
 
-          <Button color="error" onClick={confirmDelete}>
-            Delete
-          </Button>
+          <Button color="error" onClick={confirmDelete}> Delete </Button>
         </DialogActions>
       </Dialog>
       <ToastContainer />
-    </div>
+    </Container>
   );
 }
 
