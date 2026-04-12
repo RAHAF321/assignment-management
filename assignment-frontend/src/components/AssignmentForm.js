@@ -49,10 +49,12 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
   };
 
   return (
-    <Card style={{ maxWidth: 500, margin: "20px auto" }}>
+    <Card style={{ maxWidth: 500, margin: "20px auto", border: editingAssignment ? "2px solid orange" : "none"}}>
       <CardContent>
         <Typography variant="h5" gutterBottom>
-          {editingAssignment ? "Edit Assignment" : "Add Assignment"}
+          {editingAssignment
+            ? `✏️ Editing: ${editingAssignment.title}`
+            : "➕ Add Assignment"}
         </Typography>
 
         {error && (
@@ -99,6 +101,14 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
             <MenuItem value="IN_PROGRESS">IN_PROGRESS</MenuItem>
             <MenuItem value="COMPLETED">COMPLETED</MenuItem>
           </TextField>
+
+          {editingAssignment && (
+            <Button variant="outlined" color="secondary" fullWidth
+              style={{ marginTop: "10px" }}
+              onClick={clearEdit}>
+              Cancel Edit
+            </Button>
+          )}
 
           <Button
             variant="contained"

@@ -5,6 +5,7 @@ import AssignmentForm from "./components/AssignmentForm";
 import Dashboard from "./components/Dashboard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
 
 function App() {
 
@@ -12,6 +13,8 @@ function App() {
   const [editingAssignment, setEditingAssignment] = useState(null);
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("ALL");
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
 
   const handleEdit = (assignment) => {
     setEditingAssignment(assignment);
@@ -28,15 +31,22 @@ function App() {
   }, []);
 
   // DELETE HANDLER
-  const handleDelete = async (assignment) => {
-   const confirmDelete = window.confirm(`Are you sure you want to delete "${assignment.title}"?`);
-   if (!confirmDelete) return;
+  const handleDelete = (assignment) => {
+    setSelectedAssignment(assignment);
+    setOpenDialog(true);
+  };
+  const confirmDelete = async () => {
     try {
-      await deleteAssignment(assignment.id);
-      toast.success("Assignment deleted");
-      loadData(); // refresh
+      await deleteAssignment(selectedAssignment.id);
+
+      toast.success(`"${selectedAssignment.title}" deleted 🗑️`);
+
+      loadData();
     } catch (err) {
-      toast.error("Delete failed");
+      toast.error("Delete failed ❌");
+    } finally {
+      setOpenDialog(false);
+      setSelectedAssignment(null);
     }
   };
 
@@ -90,6 +100,24 @@ function App() {
         onDelete={handleDelete}
         onEdit={handleEdit}
       />
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+
+        <DialogContent>
+          Are you sure you want to delete{" "}
+          <b>{selectedAssignment?.title}</b>?
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>
+            Cancel
+          </Button>
+
+          <Button color="error" onClick={confirmDelete}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
       <ToastContainer />
     </div>
   );
