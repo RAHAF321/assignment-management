@@ -18,6 +18,10 @@ function App() {
 
   const handleEdit = (assignment) => {
     setEditingAssignment(assignment);
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
   };
 
   const loadData = () => {
@@ -39,11 +43,11 @@ function App() {
     try {
       await deleteAssignment(selectedAssignment.id);
 
-      toast.success(`"${selectedAssignment.title}" deleted 🗑️`);
+      toast.success(`"${selectedAssignment.title}" deleted`);
 
       loadData();
     } catch (err) {
-      toast.error("Delete failed ❌");
+      toast.error("Delete failed");
     } finally {
       setOpenDialog(false);
       setSelectedAssignment(null);
@@ -65,7 +69,7 @@ function App() {
   return (
     <div>
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>
-        🚀 Assignment Manager
+         Assignment Manager
       </h1>
 
       <div style={{ padding: "20px" }}>
