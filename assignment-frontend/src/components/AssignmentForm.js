@@ -1,4 +1,13 @@
 import React, { useEffect, useState } from "react";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+
 import { createAssignment, updateAssignment } from "../services/api";
 
 function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
@@ -10,7 +19,6 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
 
   const [error, setError] = useState("");
 
-  // 🧠 Populate form when editing
   useEffect(() => {
     if (editingAssignment) {
       setForm(editingAssignment);
@@ -22,11 +30,9 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
 
     try {
       if (editingAssignment) {
-        // ✏️ UPDATE
         await updateAssignment(editingAssignment.id, form);
         clearEdit();
       } else {
-        // ➕ CREATE
         await createAssignment(form);
       }
 
@@ -39,47 +45,69 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>{editingAssignment ? "Edit Assignment" : "Add Assignment"}</h2>
+    <Card style={{ maxWidth: 500, margin: "20px auto" }}>
+      <CardContent>
+        <Typography variant="h5" gutterBottom>
+          {editingAssignment ? "Edit Assignment" : "Add Assignment"}
+        </Typography>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && (
+          <Typography color="error">{error}</Typography>
+        )}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Title"
-          value={form.title}
-          onChange={(e) =>
-            setForm({ ...form, title: e.target.value })
-          }
-        />
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Title"
+            fullWidth
+            margin="normal"
+            value={form.title}
+            onChange={(e) =>
+              setForm({ ...form, title: e.target.value })
+            }
+          />
 
-        <select
-          value={form.priority}
-          onChange={(e) =>
-            setForm({ ...form, priority: e.target.value })
-          }
-        >
-          <option>LOW</option>
-          <option>MEDIUM</option>
-          <option>HIGH</option>
-        </select>
+          <TextField
+            select
+            label="Priority"
+            fullWidth
+            margin="normal"
+            value={form.priority}
+            onChange={(e) =>
+              setForm({ ...form, priority: e.target.value })
+            }
+          >
+            <MenuItem value="LOW">LOW</MenuItem>
+            <MenuItem value="MEDIUM">MEDIUM</MenuItem>
+            <MenuItem value="HIGH">HIGH</MenuItem>
+          </TextField>
 
-        <select
-          value={form.status}
-          onChange={(e) =>
-            setForm({ ...form, status: e.target.value })
-          }
-        >
-          <option>TODO</option>
-          <option>IN_PROGRESS</option>
-          <option>COMPLETED</option>
-        </select>
+          <TextField
+            select
+            label="Status"
+            fullWidth
+            margin="normal"
+            value={form.status}
+            onChange={(e) =>
+              setForm({ ...form, status: e.target.value })
+            }
+          >
+            <MenuItem value="TODO">TODO</MenuItem>
+            <MenuItem value="IN_PROGRESS">IN_PROGRESS</MenuItem>
+            <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+          </TextField>
 
-        <button type="submit">
-          {editingAssignment ? "Update" : "Add"}
-        </button>
-      </form>
-    </div>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ marginTop: "10px" }}
+            type="submit"
+          >
+            {editingAssignment ? "Update" : "Add"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
 

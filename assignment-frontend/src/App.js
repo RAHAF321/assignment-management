@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAssignments, deleteAssignment } from "./services/api";
 import AssignmentList from "./components/AssignmentList";
 import AssignmentForm from "./components/AssignmentForm";
+import Dashboard from "./components/Dashboard";
 
 function App() {
 
@@ -70,6 +71,8 @@ function App() {
           <option value="COMPLETED">COMPLETED</option>
         </select>
       </div>
+
+      <Dashboard assignments={assignments} />
 
       <AssignmentForm
         refresh={loadData}
