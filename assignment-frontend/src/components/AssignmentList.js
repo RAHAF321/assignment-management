@@ -43,7 +43,7 @@ function AssignmentList({ assignments, onDelete, onEdit }) {
               <Button
                 variant="contained"
                 color="error"
-                onClick={() => onDelete(a.id)}
+                onClick={() => onDelete(a)}
               >
                 Delete
               </Button>

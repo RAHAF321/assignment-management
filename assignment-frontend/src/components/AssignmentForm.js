@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
+import { toast } from "react-toastify";
 import { createAssignment, updateAssignment } from "../services/api";
 
 function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
@@ -31,15 +32,18 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
     try {
       if (editingAssignment) {
         await updateAssignment(editingAssignment.id, form);
+        toast.success("Assignment updated");
         clearEdit();
       } else {
         await createAssignment(form);
+        toast.success("Assignment created");
       }
 
       setForm({ title: "", priority: "LOW", status: "TODO" });
       setError("");
       refresh();
     } catch (err) {
+      toast.error(err.response?.data?.message || "Error");
       setError(err.response?.data?.message || "Error");
     }
   };

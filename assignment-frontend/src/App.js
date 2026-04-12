@@ -3,6 +3,8 @@ import { getAssignments, deleteAssignment } from "./services/api";
 import AssignmentList from "./components/AssignmentList";
 import AssignmentForm from "./components/AssignmentForm";
 import Dashboard from "./components/Dashboard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
@@ -26,12 +28,15 @@ function App() {
   }, []);
 
   // DELETE HANDLER
-  const handleDelete = async (id) => {
+  const handleDelete = async (assignment) => {
+   const confirmDelete = window.confirm(`Are you sure you want to delete "${assignment.title}"?`);
+   if (!confirmDelete) return;
     try {
-      await deleteAssignment(id);
+      await deleteAssignment(assignment.id);
+      toast.success("Assignment deleted");
       loadData(); // refresh
     } catch (err) {
-      console.error(err);
+      toast.error("Delete failed");
     }
   };
 
@@ -85,7 +90,7 @@ function App() {
         onDelete={handleDelete}
         onEdit={handleEdit}
       />
-
+      <ToastContainer />
     </div>
   );
 }
