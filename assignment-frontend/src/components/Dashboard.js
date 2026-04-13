@@ -8,7 +8,7 @@ function Dashboard({assignments}){
   const completed = assignments.filter(a => a.status === "COMPLETED").length;
 
   return (
-      <div style={{ display: "flex", gap: "20px", padding: "20px" }}>
+      <div style={{ display: "flex", gap: "20px", padding: "10px 0 20px 0" }}>
         <StatCard title="Total" value={total} color="#1976d2" />
         <StatCard title="TODO" value={todo} color="#9e9e9e" />
         <StatCard title="IN PROGRESS" value={inProgress} color="#0288d1" />

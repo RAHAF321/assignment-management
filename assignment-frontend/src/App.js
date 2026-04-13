@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
 import { Container, TextField, Select, MenuItem, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 
 function App() {
 
@@ -62,10 +63,17 @@ function App() {
   });
 
   return (
-    <Container maxWidth="md">
-      <Box textAlign="center" mt={4} mb={3}>
-        <h1>Assignment Manager</h1>
-      </Box>
+      <>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Assignment Manager
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+     <Container maxWidth="md">
+      <Box mt={4} mb={3}>
 
       <Box
         display="flex"
@@ -97,6 +105,7 @@ function App() {
         onDelete={handleDelete}
         onEdit={handleEdit}
       />
+      </Box>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
 
@@ -112,6 +121,7 @@ function App() {
       </Dialog>
       <ToastContainer />
     </Container>
+    </>
   );
 }
 
