@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
 import { Container, TextField, Select, MenuItem, Box } from "@mui/material";
 import { AppBar, Toolbar, Typography } from "@mui/material";
+import KanbanBoard from "./components/KanbanBoard";
 
 function App() {
 
@@ -100,11 +101,7 @@ function App() {
         clearEdit={() => setEditingAssignment(null)}
       />
 
-      <AssignmentList
-        assignments={filteredAssignments}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-      />
+      <KanbanBoard assignments={filteredAssignments} />
       </Box>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
