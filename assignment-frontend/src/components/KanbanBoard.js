@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Button } from "@mui/material";
 
-function KanbanBoard({ assignments }) {
+function KanbanBoard({ assignments, onEdit, onDelete }) {
 
   const todo = assignments.filter(a => a.status === "TODO");
   const inProgress = assignments.filter(a => a.status === "IN_PROGRESS");
@@ -10,15 +10,15 @@ function KanbanBoard({ assignments }) {
   return (
     <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
 
-      <Column title="TODO" items={todo} />
-      <Column title="IN_PROGRESS" items={inProgress} />
-      <Column title="COMPLETED" items={completed} />
+      <Column title="TODO" items={todo} onEdit={onEdit} onDelete={onDelete}/>
+      <Column title="IN_PROGRESS" items={inProgress} onEdit={onEdit} onDelete={onDelete}/>
+      <Column title="COMPLETED" items={completed} onEdit={onEdit} onDelete={onDelete}/>
 
     </div>
   );
 }
 
-function Column({ title, items }) {
+function Column({ title, items, onEdit, onDelete }) {
   return (
     <div
       style={{
@@ -37,6 +37,24 @@ function Column({ title, items }) {
         <Card key={item.id} style={{ marginBottom: "10px" }}>
           <CardContent>
             <Typography>{item.title}</Typography>
+
+            <div style={{ marginTop: "10px" }}>
+              <Button
+                size="small"
+                onClick={() => onEdit(item)}
+                style={{ marginRight: "5px" }}
+              >
+                Edit
+              </Button>
+
+              <Button
+                size="small"
+                color="error"
+                onClick={() => onDelete(item)}
+              >
+                Delete
+              </Button>
+            </div>
           </CardContent>
         </Card>
       ))}
