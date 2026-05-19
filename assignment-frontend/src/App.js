@@ -101,7 +101,10 @@ function App() {
         clearEdit={() => setEditingAssignment(null)}
       />
 
-      <KanbanBoard assignments={filteredAssignments} />
+      <KanbanBoard assignments={filteredAssignments}
+       onEdit={handleEdit}
+       onDelete={handleDelete}
+       />
       </Box>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
