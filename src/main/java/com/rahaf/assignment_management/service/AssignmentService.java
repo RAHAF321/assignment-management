@@ -1,5 +1,6 @@
 package com.rahaf.assignment_management.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.rahaf.assignment_management.repository.AssignmentRepository;
@@ -17,8 +18,11 @@ public class AssignmentService {
     public Assignment createAssignment(Assignment assignment) {
         String title =assignment.getTitle();
         if(title == null || title.trim().isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title cannot be null or empty");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title required");
         }
+        assignment.setCreatedAt(LocalDateTime.now());
+        assignment.setUpdatedAt(LocalDateTime.now());
+
         if (assignmentRepository.existsByTitle(title)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Assignment with title '" + title + "' already exists");
         }
@@ -36,9 +40,13 @@ public class AssignmentService {
 
     public Assignment updateAssignment(Long id, Assignment updatedAssignment){
         Assignment existAssignment = getAssignmentById(id);
+
         existAssignment.setTitle(updatedAssignment.getTitle());
         existAssignment.setPriority(updatedAssignment.getPriority());
         existAssignment.setStatus(updatedAssignment.getStatus());
+        existAssignment.setDescription(updatedAssignment.getDescription());
+        existAssignment.setUpdatedAt(LocalDateTime.now());
+
         return assignmentRepository.save(existAssignment);
     }
 

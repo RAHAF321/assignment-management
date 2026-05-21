@@ -1,6 +1,5 @@
 package com.rahaf.assignment_management.model;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +9,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -23,10 +23,16 @@ public class Assignment {
 
     @Column(unique = true, nullable = false)
     private String title;
-    
+
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }
