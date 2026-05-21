@@ -14,17 +14,27 @@ import { createAssignment, updateAssignment } from "../services/api";
 function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
   const [form, setForm] = useState({
     title: "",
+    description:"",
     priority: "LOW",
     status: "TODO",
   });
 
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (editingAssignment) {
-      setForm(editingAssignment);
-    }
-  }, [editingAssignment]);
+ useEffect(() => {
+     if(editingAssignment){
+         setForm({
+             title:
+             editingAssignment.title || "",
+             description:
+             editingAssignment.description || "",
+             priority:
+             editingAssignment.priority || "LOW",
+             status:
+             editingAssignment.status || "TODO"
+         });
+     }
+ }, [editingAssignment]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +49,7 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
         toast.success("Assignment created");
       }
 
-      setForm({ title: "", priority: "LOW", status: "TODO" });
+      setForm({ title: "", description:"", priority: "LOW", status: "TODO" });
       setError("");
       refresh();
     } catch (err) {
@@ -69,6 +79,21 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
             value={form.title}
             onChange={(e) =>
               setForm({ ...form, title: e.target.value })
+            }
+          />
+
+          <TextField
+            label="Description"
+            fullWidth
+            multiline
+            rows={4}
+            margin="normal"
+            value={form.description}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                description: e.target.value
+              })
             }
           />
 

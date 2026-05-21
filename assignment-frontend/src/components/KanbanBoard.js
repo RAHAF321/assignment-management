@@ -36,25 +36,101 @@ function Column({ title, items, onEdit, onDelete }) {
       {items.map(item => (
         <Card key={item.id} style={{ marginBottom: "10px" }}>
           <CardContent>
-            <Typography>{item.title}</Typography>
 
-            <div style={{ marginTop: "10px" }}>
-              <Button
-                size="small"
-                onClick={() => onEdit(item)}
-                style={{ marginRight: "5px" }}
+              <Typography
+                  variant="h6"
+                  style={{
+                      fontWeight:"bold"
+                  }}
               >
-                Edit
-              </Button>
+                  {item.title}
+              </Typography>
 
-              <Button
-                size="small"
-                color="error"
-                onClick={() => onDelete(item)}
+
+              <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{
+                      marginTop:"8px",
+                      minHeight:"40px"
+                  }}
               >
-                Delete
-              </Button>
-            </div>
+                  {item.description || "No description"}
+              </Typography>
+
+
+              <Typography
+                  style={{
+                      marginTop:"10px",
+                      fontWeight:"bold",
+                      color:
+                          item.priority==="HIGH"
+                          ? "red"
+                          : item.priority==="MEDIUM"
+                          ? "orange"
+                          : "green"
+                  }}
+              >
+                  {item.priority}
+              </Typography>
+
+
+              <Typography
+                  variant="caption"
+                  display="block"
+                  style={{marginTop:"10px"}}
+              >
+                  Created:
+                  {" "}
+                  {item.createdAt
+                      ? new Date(
+                            item.createdAt
+                        ).toLocaleDateString()
+                      : "-"
+                  }
+              </Typography>
+
+
+              <Typography
+                  variant="caption"
+                  display="block"
+              >
+                  Updated:
+                  {" "}
+                  {item.updatedAt
+                      ? new Date(
+                          item.updatedAt
+                        ).toLocaleDateString()
+                      : "-"
+                  }
+              </Typography>
+
+
+              <div style={{ marginTop:"15px" }}>
+
+                  <Button
+                      size="small"
+                      onClick={() => onEdit(item)}
+                      style={{
+                          marginRight:"5px"
+                      }}
+                  >
+                      Edit
+                  </Button>
+
+
+                  <Button
+                      size="small"
+                      color="error"
+                      onClick={() =>
+                          onDelete(item)
+                      }
+                  >
+                      Delete
+                  </Button>
+
+              </div>
+
           </CardContent>
         </Card>
       ))}
