@@ -52,18 +52,12 @@ function App() {
 
   // Filter Logic
   const filteredAssignments = assignments.filter((a) => {
-    const matchesSearch = a.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-    const matchesStatus =
-      filterStatus === "ALL" || a.status === filterStatus;
-
+    const matchesSearch = a.title.toLowerCase().includes(search.toLowerCase());
+    const matchesStatus = filterStatus === "ALL" || a.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
 
-  return (
-      <>
+  return ( <>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -72,22 +66,9 @@ function App() {
         </Toolbar>
       </AppBar>
 
-     <Container maxWidth="md">
+     <Container maxWidth={false} sx={{ px: 80 }}>
       <Box mt={4} mb={3}>
-
-      <Box
-        sx={{
-          display:"flex",
-          gap:2,
-          alignItems:"center",
-          justifyContent:"space-between",
-          mb:4,
-          p:2,
-          background:"#fff",
-          borderRadius:"16px",
-          boxShadow:2
-         }}>
-
+      <Box sx={{ display:"flex", gap:2, alignItems:"center", justifyContent:"space-between", mb:4, p:2, background:"#fff", borderRadius:"16px", boxShadow:2 }}>
       <TextField label="Search assignments..." variant="outlined" size="small" value={search}
           onChange={(e)=>setSearch(e.target.value)}
           sx={{ flex:1 }} />
@@ -95,28 +76,15 @@ function App() {
       <Select value={filterStatus} size="small" onChange={(e)=>
             setFilterStatus(e.target.value)}
           sx={{ minWidth:180 }}>
-          <MenuItem value="ALL">
-             All Status
-          </MenuItem>
-          <MenuItem value="TODO">
-             TODO
-          </MenuItem>
-          <MenuItem value="IN_PROGRESS">
-             IN PROGRESS
-          </MenuItem>
-          <MenuItem value="COMPLETED">
-             COMPLETED
-          </MenuItem>
+          <MenuItem value="ALL"> All Status </MenuItem>
+          <MenuItem value="TODO"> TODO </MenuItem>
+          <MenuItem value="IN_PROGRESS"> IN PROGRESS </MenuItem>
+          <MenuItem value="COMPLETED"> COMPLETED </MenuItem>
       </Select>
       </Box>
 
       <Dashboard assignments={assignments} />
-
-      <AssignmentForm
-        refresh={loadData}
-        editingAssignment={editingAssignment}
-        clearEdit={() => setEditingAssignment(null)}
-      />
+      <AssignmentForm refresh={loadData} editingAssignment={editingAssignment} clearEdit={() => setEditingAssignment(null)} />
 
       <KanbanBoard assignments={filteredAssignments}
        onEdit={handleEdit}
@@ -124,7 +92,7 @@ function App() {
        />
       </Box>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogTitle> Confirm Delete </DialogTitle>
 
         <DialogContent> Are you sure you want to delete{" "}
           <b>{selectedAssignment?.title}</b>?
@@ -132,9 +100,9 @@ function App() {
 
         <DialogActions>
           <Button onClick={() => setOpenDialog(false)}> Cancel </Button>
-
           <Button color="error" onClick={confirmDelete}> Delete </Button>
         </DialogActions>
+
       </Dialog>
       <ToastContainer />
     </Container>
