@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Button } from "@mui/material";
+import { Card, CardContent, Typography, Button, Box } from "@mui/material";
 
 function KanbanBoard({ assignments, onEdit, onDelete }) {
 
@@ -8,129 +8,72 @@ function KanbanBoard({ assignments, onEdit, onDelete }) {
   const completed = assignments.filter(a => a.status === "COMPLETED");
 
   return (
-    <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-
+    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"20px", marginTop:"20px"}} >
       <Column title="TODO" items={todo} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="IN_PROGRESS" items={inProgress} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="COMPLETED" items={completed} onEdit={onEdit} onDelete={onDelete}/>
-
     </div>
   );
 }
 
 function Column({ title, items, onEdit, onDelete }) {
-  return (
-    <div
-      style={{
+  return ( <div style={{
         flex: 1,
         background: "#f4f4f4",
         padding: "10px",
         borderRadius: "10px",
         minHeight: "300px"
-      }}
-    >
+      }} >
       <Typography variant="h6" align="center" gutterBottom>
         {title}
       </Typography>
 
       {items.map(item => (
-        <Card key={item.id} style={{ marginBottom: "10px" }}>
+        <Card key={item.id} sx={{ mb:2, borderRadius:"14px", boxShadow:3, transition:"0.3s", "&:hover":{ transform: "translateY(-4px)"}}}>
           <CardContent>
-
-              <Typography
-                  variant="h6"
-                  style={{
-                      fontWeight:"bold"
-                  }}
-              >
+              <Typography variant="h6"
+                  style={{ fontWeight:"bold" }} >
                   {item.title}
               </Typography>
-
-
-              <Typography
-                  variant="body2"
-                  color="text.secondary"
+              <Typography variant="body2" color="text.secondary"
                   style={{
                       marginTop:"8px",
                       minHeight:"40px"
-                  }}
-              >
+                  }} >
                   {item.description || "No description"}
               </Typography>
-
 
               <Typography
                   style={{
                       marginTop:"10px",
                       fontWeight:"bold",
-                      color:
-                          item.priority==="HIGH"
-                          ? "red"
-                          : item.priority==="MEDIUM"
-                          ? "orange"
-                          : "green"
-                  }}
-              >
+                      color: item.priority==="HIGH" ? "red" : item.priority==="MEDIUM" ? "orange" : "green"}}>
                   {item.priority}
               </Typography>
 
-
-              <Typography
-                  variant="caption"
-                  display="block"
-                  style={{marginTop:"10px"}}
-              >
-                  Created:
-                  {" "}
-                  {item.createdAt
-                      ? new Date(
-                            item.createdAt
-                        ).toLocaleDateString()
-                      : "-"
-                  }
+            <Box mt={1} sx={{ display:"flex", flexDirection:"column", gap:"4px" }}>
+              <Typography variant="caption" color="text.secondary" >
+                Created: {" "}
+                {item.createdAt ? new Date( item.createdAt ).toLocaleDateString(): "-" }
               </Typography>
 
-
-              <Typography
-                  variant="caption"
-                  display="block"
-              >
-                  Updated:
-                  {" "}
-                  {item.updatedAt
-                      ? new Date(
-                          item.updatedAt
-                        ).toLocaleDateString()
-                      : "-"
-                  }
+              <Typography variant="caption" color="text.secondary" >
+                Updated: {" "}
+                {item.updatedAt ? new Date( item.updatedAt).toLocaleDateString() : "-"}
               </Typography>
-
+            </Box>
 
               <div style={{ marginTop:"15px" }}>
-
-                  <Button
-                      size="small"
+                  <Button size="small"
                       onClick={() => onEdit(item)}
-                      style={{
-                          marginRight:"5px"
-                      }}
-                  >
+                      style={{ marginRight:"5px" }} >
                       Edit
                   </Button>
-
-
-                  <Button
-                      size="small"
-                      color="error"
-                      onClick={() =>
-                          onDelete(item)
-                      }
-                  >
+                  <Button size="small" color="error"
+                      onClick={() => onDelete(item) } >
                       Delete
                   </Button>
-
               </div>
-
           </CardContent>
         </Card>
       ))}

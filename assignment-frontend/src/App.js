@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getAssignments, deleteAssignment } from "./services/api";
-import AssignmentList from "./components/AssignmentList";
 import AssignmentForm from "./components/AssignmentForm";
 import Dashboard from "./components/Dashboard";
 import { ToastContainer, toast } from "react-toastify";
@@ -77,20 +76,38 @@ function App() {
       <Box mt={4} mb={3}>
 
       <Box
-        display="flex"
-        gap={2}
-        justifyContent="center"
-        alignItems="center"
-        mb={3}
-      >
-        <TextField label="Search" variant="outlined" size="small" style={{ width: "250px" }} value={search} onChange={(e) => setSearch(e.target.value)}/>
+        sx={{
+          display:"flex",
+          gap:2,
+          alignItems:"center",
+          justifyContent:"space-between",
+          mb:4,
+          p:2,
+          background:"#fff",
+          borderRadius:"16px",
+          boxShadow:2
+         }}>
 
-        <Select value={filterStatus} size="small" onChange={(e) => setFilterStatus(e.target.value)}>
-          <MenuItem value="ALL">All</MenuItem>
-          <MenuItem value="TODO">TODO</MenuItem>
-          <MenuItem value="IN_PROGRESS">IN_PROGRESS</MenuItem>
-          <MenuItem value="COMPLETED">COMPLETED</MenuItem>
-        </Select>
+      <TextField label="Search assignments..." variant="outlined" size="small" value={search}
+          onChange={(e)=>setSearch(e.target.value)}
+          sx={{ flex:1 }} />
+
+      <Select value={filterStatus} size="small" onChange={(e)=>
+            setFilterStatus(e.target.value)}
+          sx={{ minWidth:180 }}>
+          <MenuItem value="ALL">
+             All Status
+          </MenuItem>
+          <MenuItem value="TODO">
+             TODO
+          </MenuItem>
+          <MenuItem value="IN_PROGRESS">
+             IN PROGRESS
+          </MenuItem>
+          <MenuItem value="COMPLETED">
+             COMPLETED
+          </MenuItem>
+      </Select>
       </Box>
 
       <Dashboard assignments={assignments} />
