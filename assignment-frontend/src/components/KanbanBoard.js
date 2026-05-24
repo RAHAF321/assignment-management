@@ -31,8 +31,21 @@ function Column({ title, items, onEdit, onDelete }) {
         {title}
       </Typography>
 
-      {items.map(item => (
-        <Card key={item.id} sx={{ mb:2, borderRadius:"14px", boxShadow:3, transition:"0.3s", "&:hover":{ transform: "translateY(-4px)"}}}>
+      {items.map((item, index) => (
+
+        <Draggable
+          key={item.id}
+          draggableId={String(item.id)}
+          index={index}
+        >
+
+          {(provided) => (
+
+            <Card ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
+              sx={{ mb:2, borderRadius:"14px", boxShadow:3, transition:"0.3s",
+                "&:hover":{
+                  transform:"translateY(-4px)"
+                }}} >
           <CardContent>
               <Typography variant="h6"
                   style={{ fontWeight:"bold" }} >
@@ -78,8 +91,9 @@ function Column({ title, items, onEdit, onDelete }) {
                   </Button>
               </div>
           </CardContent>
-        </Card>
-      ))}
+         </Card> )}
+            </Draggable>
+        ))}
             {provided.placeholder}
           </div>
         )}
