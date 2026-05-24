@@ -91,8 +91,11 @@ function Column({ title, items, onEdit, onDelete }) {
                   </Button>
               </div>
           </CardContent>
-         </Card> )}
-            </Draggable>
+          </Card>
+
+                   )}
+
+                 </Draggable>
         ))}
             {provided.placeholder}
           </div>
