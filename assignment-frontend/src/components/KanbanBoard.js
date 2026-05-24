@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { DragDropContext, Droppable, Draggable} from "@hello-pangea/dnd";
 
 function KanbanBoard({ assignments, onEdit, onDelete }) {
 
@@ -8,22 +9,24 @@ function KanbanBoard({ assignments, onEdit, onDelete }) {
   const completed = assignments.filter(a => a.status === "COMPLETED");
 
   return (
-    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"20px", marginTop:"20px"}} >
+    <DragDropContext onDragEnd={() => {}}>
+      <div
+        style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"20px", marginTop:"20px"}}>
       <Column title="TODO" items={todo} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="IN_PROGRESS" items={inProgress} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="COMPLETED" items={completed} onEdit={onEdit} onDelete={onDelete}/>
     </div>
-  );
-}
+      </DragDropContext>
+    );
+    }
 
 function Column({ title, items, onEdit, onDelete }) {
-  return ( <div style={{
-        flex: 1,
-        background: "#f4f4f4",
-        padding: "10px",
-        borderRadius: "10px",
-        minHeight: "300px"
-      }} >
+  return (
+    <Droppable droppableId={title}>
+      {(provided) => (
+        <div ref={provided.innerRef}
+          {...provided.droppableProps}
+          style={{ flex:1, background:"#f4f4f4", padding:"10px", borderRadius:"10px", minHeight:"300px" }} >
       <Typography variant="h6" align="center" gutterBottom>
         {title}
       </Typography>
@@ -77,8 +80,11 @@ function Column({ title, items, onEdit, onDelete }) {
           </CardContent>
         </Card>
       ))}
-    </div>
-  );
-}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+        );
+      }
 
 export default KanbanBoard;
