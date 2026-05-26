@@ -1,4 +1,6 @@
 import axios from "axios";
+export const updateAssignmentStatus = (id, status) =>
+  axios.put(`${API_URL}/${id}`, { status });
 
 const API_URL = "http://localhost:8080/assignments";
 

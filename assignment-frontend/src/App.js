@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAssignments, deleteAssignment } from "./services/api";
+import { getAssignments, deleteAssignment, updateAssignmentStatus } from "./services/api";
 import AssignmentForm from "./components/AssignmentForm";
 import Dashboard from "./components/Dashboard";
 import { ToastContainer, toast } from "react-toastify";
@@ -50,6 +50,31 @@ function App() {
     }
   };
 
+  const handleDragEnd = async (result) => {
+
+    if (!result.destination) return;
+
+    const assignmentId = result.draggableId;
+    const newStatus = result.destination.droppableId;
+
+    try {
+
+      await updateAssignmentStatus(
+        assignmentId,
+        newStatus
+      );
+
+      loadData();
+
+      toast.success("Status updated");
+
+    } catch (err) {
+
+      toast.error("Drag update failed");
+
+    }
+  };
+
   // Filter Logic
   const filteredAssignments = assignments.filter((a) => {
     const matchesSearch = a.title.toLowerCase().includes(search.toLowerCase());
@@ -86,10 +111,12 @@ function App() {
       <Dashboard assignments={assignments} />
       <AssignmentForm refresh={loadData} editingAssignment={editingAssignment} clearEdit={() => setEditingAssignment(null)} />
 
-      <KanbanBoard assignments={filteredAssignments}
-       onEdit={handleEdit}
-       onDelete={handleDelete}
-       />
+      <KanbanBoard
+        assignments={filteredAssignments}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onDragEnd={handleDragEnd}
+      />
       </Box>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle> Confirm Delete </DialogTitle>

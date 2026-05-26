@@ -1,21 +1,13 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, Box } from "@mui/material";
 
-function KanbanBoard({ assignments, onEdit, onDelete }) {
-
+function KanbanBoard({ assignments, onEdit, onDelete, onDragEnd}) {
   const todo = assignments.filter(a => a.status === "TODO");
   const inProgress = assignments.filter(a => a.status === "IN_PROGRESS");
   const completed = assignments.filter(a => a.status === "COMPLETED");
 
   return (
-    <div
-      style={{
-        display:"grid",
-        gridTemplateColumns:"1fr 1fr 1fr",
-        gap:"20px",
-        marginTop:"20px"
-      }}
-    >
+    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"20px", marginTop:"20px" }}>
       <Column title="TODO" items={todo} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="IN_PROGRESS" items={inProgress} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="COMPLETED" items={completed} onEdit={onEdit} onDelete={onDelete}/>
@@ -26,38 +18,21 @@ function KanbanBoard({ assignments, onEdit, onDelete }) {
 function Column({ title, items, onEdit, onDelete }) {
 
   return (
-    <div
-      style={{
-        background:"#f4f4f4",
-        padding:"10px",
-        borderRadius:"10px",
-        minHeight:"300px"
-      }}
-    >
+    <div style={{ background:"#f4f4f4", padding:"10px", borderRadius:"10px", minHeight:"300px" }}>
       <Typography variant="h6" align="center" gutterBottom>
         {title}
       </Typography>
 
       {items.map((item) => (
-
-        <Card
-          key={item.id}
-          sx={{
-            mb:2,
-            borderRadius:"14px",
-            boxShadow:3,
-            transition:"0.3s",
+        <Card key={item.id}
+          sx={{ mb:2, borderRadius:"14px", boxShadow:3, transition:"0.3s",
             "&:hover":{
               transform:"translateY(-4px)"
             }
-          }}
-        >
+          }}>
           <CardContent>
 
-            <Typography
-              variant="h6"
-              style={{ fontWeight:"bold" }}
-            >
+            <Typography variant="h6" style={{ fontWeight:"bold" }}>
               {item.title}
             </Typography>
 
