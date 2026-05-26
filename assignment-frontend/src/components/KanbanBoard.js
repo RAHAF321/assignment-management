@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 function KanbanBoard({ assignments, onEdit, onDelete, onDragEnd}) {
   const todo = assignments.filter(a => a.status === "TODO");
@@ -7,13 +8,15 @@ function KanbanBoard({ assignments, onEdit, onDelete, onDragEnd}) {
   const completed = assignments.filter(a => a.status === "COMPLETED");
 
   return (
-    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"20px", marginTop:"20px" }}>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"20px", marginTop:"20px" }}>
       <Column title="TODO" items={todo} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="IN_PROGRESS" items={inProgress} onEdit={onEdit} onDelete={onDelete}/>
       <Column title="COMPLETED" items={completed} onEdit={onEdit} onDelete={onDelete}/>
     </div>
-  );
-}
+      </DragDropContext>
+    );
+    }
 
 function Column({ title, items, onEdit, onDelete }) {
 
