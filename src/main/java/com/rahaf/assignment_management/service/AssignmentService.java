@@ -41,12 +41,19 @@ public class AssignmentService {
     public Assignment updateAssignment(Long id, Assignment updatedAssignment){
         Assignment existAssignment = getAssignmentById(id);
 
-        existAssignment.setTitle(updatedAssignment.getTitle());
-        existAssignment.setPriority(updatedAssignment.getPriority());
-        existAssignment.setStatus(updatedAssignment.getStatus());
-        existAssignment.setDescription(updatedAssignment.getDescription());
+        if(updatedAssignment.getTitle() != null) {
+            existAssignment.setTitle( updatedAssignment.getTitle() );
+        }
+        if(updatedAssignment.getDescription()!=null) {
+            existAssignment.setDescription(updatedAssignment.getDescription());
+        }
+        if(updatedAssignment.getPriority()!=null) {
+            existAssignment.setPriority(updatedAssignment.getPriority());
+        }
+        if(updatedAssignment.getStatus()!=null) {
+            existAssignment.setStatus(updatedAssignment.getStatus());
+        }
         existAssignment.setUpdatedAt(LocalDateTime.now());
-
         return assignmentRepository.save(existAssignment);
     }
 
