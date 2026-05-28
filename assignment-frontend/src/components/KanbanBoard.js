@@ -21,99 +21,75 @@ function KanbanBoard({ assignments, onEdit, onDelete, onDragEnd}) {
 function Column({ title, items, onEdit, onDelete }) {
 
   return (
-    <div style={{ background:"#f4f4f4", padding:"10px", borderRadius:"10px", minHeight:"300px" }}>
+    <Droppable droppableId={title}>
+      {(provided) => ( <div ref={provided.innerRef} {...provided.droppableProps}
+          style={{ background:"#f4f4f4", padding:"10px", borderRadius:"10px", minHeight:"300px" }} >
       <Typography variant="h6" align="center" gutterBottom>
         {title}
       </Typography>
 
-      {items.map((item) => (
-        <Card key={item.id}
-          sx={{ mb:2, borderRadius:"14px", boxShadow:3, transition:"0.3s",
-            "&:hover":{
-              transform:"translateY(-4px)"
-            }
-          }}>
-          <CardContent>
+      {items.map((item, index) => (
 
-            <Typography variant="h6" style={{ fontWeight:"bold" }}>
-              {item.title}
-            </Typography>
+        <Draggable key={item.id} draggableId={String(item.id)} index={index} >
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} >
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              style={{
-                marginTop:"8px",
-                minHeight:"40px"
-              }}
-            >
-              {item.description || "No description"}
-            </Typography>
+              <Card
+                sx={{ mb: 2, borderRadius: "14px", boxShadow: 3, transition: "0.3s",
+                  "&:hover": {
+                    transform: "translateY(-4px)"
+                  }
+                }} >
 
-            <Typography
-              style={{
-                marginTop:"10px",
-                fontWeight:"bold",
-                color:
-                  item.priority==="HIGH"
-                  ? "red"
-                  : item.priority==="MEDIUM"
-                  ? "orange"
-                  : "green"
-              }}
-            >
-              {item.priority}
-            </Typography>
+                <CardContent>
 
-            <Box
-              mt={1}
-              sx={{
-                display:"flex",
-                flexDirection:"column",
-                gap:"4px"
-              }}
-            >
-              <Typography variant="caption" color="text.secondary">
-                Created:{" "}
-                {item.createdAt
-                  ? new Date(item.createdAt).toLocaleDateString()
-                  : "-"}
-              </Typography>
+                  <Typography variant="h6" style={{ fontWeight: "bold" }} >
+                    {item.title}
+                  </Typography>
 
-              <Typography variant="caption" color="text.secondary">
-                Updated:{" "}
-                {item.updatedAt
-                  ? new Date(item.updatedAt).toLocaleDateString()
-                  : "-"}
-              </Typography>
-            </Box>
+                  <Typography variant="body2" color="text.secondary"
+                    style={{ marginTop: "8px", minHeight: "40px" }} >
+                    {item.description || "No description"}
+                  </Typography>
 
-            <div style={{ marginTop:"15px" }}>
+                  <Typography style={{ marginTop: "10px", fontWeight: "bold",
+                      color: item.priority === "HIGH" ? "red" : item.priority === "MEDIUM" ? "orange" : "green" }} >
+                    {item.priority}
+                  </Typography>
 
-              <Button
-                size="small"
-                onClick={() => onEdit(item)}
-                style={{ marginRight:"5px" }}
-              >
-                Edit
-              </Button>
+                  <Box mt={1} sx={{ display: "flex", flexDirection: "column", gap: "4px" }} >
 
-              <Button
-                size="small"
-                color="error"
-                onClick={() => onDelete(item)}
-              >
-                Delete
-              </Button>
+                    <Typography variant="caption" color="text.secondary" >
+                      Created:{" "}
+                      {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : "-" }
+                    </Typography>
 
+                    <Typography variant="caption" color="text.secondary" >
+                      Updated:{" "}
+                      {
+                      item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : "-"
+                      }
+                    </Typography>
+                  </Box>
+                  <div style={{ marginTop: "15px" }}>
+                    <Button size="small" onClick={() => onEdit(item)} style={{ marginRight: "5px" }}>
+                      Edit
+                    </Button>
+
+                    <Button size="small" color="error" onClick={() => onDelete(item)} >
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-
-          </CardContent>
-        </Card>
-
+          )}
+        </Draggable>
       ))}
-    </div>
-  );
-}
-
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+    );
+    }
 export default KanbanBoard;
