@@ -1,7 +1,4 @@
 import axios from "axios";
-export const updateAssignmentStatus = (id, status) =>
-  axios.put(`${API_URL}/${id}`, { status });
-
 const API_URL = "http://localhost:8080/assignments";
 
 // GET ALL
@@ -13,5 +10,8 @@ export const createAssignment = (data) => axios.post(API_URL, data);
 // DELETE
 export const deleteAssignment = (id) => axios.delete(`${API_URL}/${id}`);
 
-// UPDATE
-export const updateAssignment = (id, data) =>  axios.put(`http://localhost:8080/assignments/${id}`, data);
+// UPDATE FULL ASSIGNMENT
+export const updateAssignment = (id, data) => axios.put(`${API_URL}/${id}`, data);
+
+// UPDATE STATUS ONLY
+export const updateAssignmentStatus = (id, status) => axios.put(`${API_URL}/${id}`, { status });
