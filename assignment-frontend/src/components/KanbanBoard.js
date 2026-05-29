@@ -34,15 +34,8 @@ function Column({ title, items, onEdit, onDelete }) {
           {(provided) => (
             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} >
 
-              <Card
-                sx={{ mb: 2, borderRadius: "14px", boxShadow: 3, transition: "0.3s",
-                  "&:hover": {
-                    transform: "translateY(-4px)"
-                  }
-                }} >
-
+              <Card sx={{ mb: 2, borderRadius: "14px", boxShadow: 3, transition: "0.3s", "&:hover": { transform: "translateY(-4px)" } }} >
                 <CardContent>
-
                   <Typography variant="h6" style={{ fontWeight: "bold" }} >
                     {item.title}
                   </Typography>
@@ -57,6 +50,11 @@ function Column({ title, items, onEdit, onDelete }) {
                     {item.priority}
                   </Typography>
 
+                  <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold" }} >
+                      📅 Due: {" "}
+                      {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : "Not Set" }
+                  </Typography>
+
                   <Box mt={1} sx={{ display: "flex", flexDirection: "column", gap: "4px" }} >
 
                     <Typography variant="caption" color="text.secondary" >
@@ -66,9 +64,7 @@ function Column({ title, items, onEdit, onDelete }) {
 
                     <Typography variant="caption" color="text.secondary" >
                       Updated:{" "}
-                      {
-                      item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : "-"
-                      }
+                      { item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : "-" }
                     </Typography>
                   </Box>
                   <div style={{ marginTop: "15px" }}>
