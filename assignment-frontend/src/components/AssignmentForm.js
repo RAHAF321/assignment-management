@@ -23,6 +23,14 @@ function AssignmentForm({ refresh, editingAssignment, clearEdit }) {
              status: editingAssignment.status || "TODO",
              dueDate: editingAssignment.dueDate || ""
          });
+     }else{
+     setForm({
+           title: "",
+           description: "",
+           priority: "LOW",
+           status: "TODO",
+           dueDate: ""
+         });
      }
  }, [editingAssignment]);
 
