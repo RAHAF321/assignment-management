@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -35,4 +36,6 @@ public class Assignment {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private LocalDate dueDate;
 }

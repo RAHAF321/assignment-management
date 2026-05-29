@@ -50,6 +50,9 @@ public class AssignmentService {
         if(updatedAssignment.getPriority()!=null) {
             existAssignment.setPriority(updatedAssignment.getPriority());
         }
+        if(updatedAssignment.getDueDate()!=null) {
+            existAssignment.setDueDate(updatedAssignment.getDueDate());
+        }
         if(updatedAssignment.getStatus()!=null) {
             existAssignment.setStatus(updatedAssignment.getStatus());
         }
