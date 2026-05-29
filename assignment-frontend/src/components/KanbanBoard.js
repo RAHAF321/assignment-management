@@ -1,11 +1,26 @@
 import React from "react";
-import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { Card, CardContent, Typography, Button, Box, Chip } from "@mui/material";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 function KanbanBoard({ assignments, onEdit, onDelete, onDragEnd}) {
-  const todo = assignments.filter(a => a.status === "TODO");
-  const inProgress = assignments.filter(a => a.status === "IN_PROGRESS");
-  const completed = assignments.filter(a => a.status === "COMPLETED");
+  const todo = assignments.filter(a => a.status === "TODO")
+                          .sort((a, b) => {
+                                           if (!a.dueDate) return 1;
+                                           if (!b.dueDate) return -1;
+                                           return new Date(a.dueDate) - new Date(b.dueDate);
+                                         });
+  const inProgress = assignments.filter(a => a.status === "IN_PROGRESS")
+                                .sort((a, b) => {
+                                               if (!a.dueDate) return 1;
+                                               if (!b.dueDate) return -1;
+                                               return new Date(a.dueDate) - new Date(b.dueDate);
+                                             });
+  const completed = assignments.filter(a => a.status === "COMPLETED")
+                                .sort((a, b) => {
+                                               if (!a.dueDate) return 1;
+                                               if (!b.dueDate) return -1;
+                                               return new Date(a.dueDate) - new Date(b.dueDate);
+                                             });
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -54,6 +69,14 @@ function Column({ title, items, onEdit, onDelete }) {
                       📅 Due: {" "}
                       {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : "Not Set" }
                   </Typography>
+
+                  {item.dueDate &&
+                   new Date(item.dueDate) < new Date() &&
+                   item.status !== "COMPLETED" && (
+                    <Box mt={1}>
+                      <Chip label="OVERDUE" color="error" size="small" />
+                    </Box>
+                  )}
 
                   <Box mt={1} sx={{ display: "flex", flexDirection: "column", gap: "4px" }} >
 
