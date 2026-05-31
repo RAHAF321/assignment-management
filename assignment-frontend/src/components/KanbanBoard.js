@@ -70,9 +70,7 @@ function Column({ title, items, onEdit, onDelete }) {
                       {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : "Not Set" }
                   </Typography>
 
-                  {item.dueDate &&
-                   new Date(item.dueDate) < new Date() &&
-                   item.status !== "COMPLETED" && (
+                  {item.dueDate && (new Date(item.dueDate) < new Date()) && item.status !== "COMPLETED" && (
                     <Box mt={1}>
                       <Chip label="OVERDUE" color="error" size="small" />
                     </Box>

@@ -8,6 +8,11 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/m
 import { Container, TextField, Select, MenuItem, Box } from "@mui/material";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import KanbanBoard from "./components/KanbanBoard";
+import SettingsIcon from "@mui/icons-material/Settings";
+import IconButton from "@mui/material/IconButton";
+import Drawer from "@mui/material/Drawer";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 function App() {
 
@@ -17,6 +22,7 @@ function App() {
   const [filterStatus, setFilterStatus] = useState("ALL");
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handleEdit = (assignment) => {
     setEditingAssignment(assignment);
@@ -88,6 +94,9 @@ function App() {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Assignment Manager
           </Typography>
+          <IconButton color="inherit" onClick={() => setSettingsOpen(true)} >
+                <SettingsIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -131,6 +140,15 @@ function App() {
         </DialogActions>
 
       </Dialog>
+      <Drawer anchor="right" open={settingsOpen} onClose={() => setSettingsOpen(false)} >
+        <Box sx={{ width: 250, p: 2 }}>
+          <Typography variant="h6">
+            Settings
+          </Typography>
+
+          <FormControlLabel control={<Switch />} label="Dark Mode" />
+        </Box>
+      </Drawer>
       <ToastContainer />
     </Container>
     </>
