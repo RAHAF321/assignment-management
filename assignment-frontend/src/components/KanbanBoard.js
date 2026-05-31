@@ -37,9 +37,18 @@ function Column({ title, items, onEdit, onDelete }) {
 
   return (
     <Droppable droppableId={title}>
-      {(provided) => ( <div ref={provided.innerRef} {...provided.droppableProps}
-          style={{ background:"#f4f4f4", padding:"10px", borderRadius:"10px", minHeight:"300px" }} >
-      <Typography variant="h6" align="center" gutterBottom>
+      {(provided) => (
+      <Box
+        ref={provided.innerRef}
+        {...provided.droppableProps}
+        sx={{
+          bgcolor: "background.paper",
+          p: 2,
+          borderRadius: "10px",
+          minHeight: "300px"
+        }}
+      >
+      <Typography variant="h6" align="center" gutterBottom sx={{ color: "text.primary", fontWeight: "bold" }} >
         {title}
       </Typography>
 
@@ -99,12 +108,12 @@ function Column({ title, items, onEdit, onDelete }) {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+           </div>
           )}
         </Draggable>
       ))}
           {provided.placeholder}
-        </div>
+        </Box>
       )}
     </Droppable>
     );

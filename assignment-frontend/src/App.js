@@ -13,6 +13,8 @@ import IconButton from "@mui/material/IconButton";
 import Drawer from "@mui/material/Drawer";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 function App() {
 
@@ -23,6 +25,13 @@ function App() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const theme = createTheme({
+      palette: {
+        mode: darkMode ? "dark" : "light"
+      }
+    });
 
   const handleEdit = (assignment) => {
     setEditingAssignment(assignment);
@@ -88,8 +97,10 @@ function App() {
     return matchesSearch && matchesStatus;
   });
 
-  return ( <>
-      <AppBar position="static">
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppBar position="static" color="default">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Assignment Manager
@@ -102,14 +113,42 @@ function App() {
 
      <Container maxWidth={false} sx={{ px: 80 }}>
       <Box mt={4} mb={3}>
-      <Box sx={{ display:"flex", gap:2, alignItems:"center", justifyContent:"space-between", mb:4, p:2, background:"#fff", borderRadius:"16px", boxShadow:2 }}>
-      <TextField label="Search assignments..." variant="outlined" size="small" value={search}
-          onChange={(e)=>setSearch(e.target.value)}
-          sx={{ flex:1 }} />
+      <Box
+        sx={{
+          display:"flex",
+          gap:2,
+          alignItems:"center",
+          justifyContent:"space-between",
+          mb:4,
+          p:2,
+          bgcolor:"background.paper",
+          borderRadius:"16px",
+          boxShadow:2
+        }}
+      >
+      <TextField
+        label="Search assignments..."
+        variant="outlined"
+        size="small"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        sx={{
+          flex:1,
+          "& .MuiOutlinedInput-root": {
+            bgcolor:"background.default"
+          }
+        }}
+      />
 
-      <Select value={filterStatus} size="small" onChange={(e)=>
-            setFilterStatus(e.target.value)}
-          sx={{ minWidth:180 }}>
+      <Select
+        value={filterStatus}
+        size="small"
+        onChange={(e) => setFilterStatus(e.target.value)}
+        sx={{
+          minWidth:180,
+          bgcolor:"background.default"
+        }}
+      >
           <MenuItem value="ALL"> All Status </MenuItem>
           <MenuItem value="TODO"> TODO </MenuItem>
           <MenuItem value="IN_PROGRESS"> IN PROGRESS </MenuItem>
@@ -146,13 +185,13 @@ function App() {
             Settings
           </Typography>
 
-          <FormControlLabel control={<Switch />} label="Dark Mode" />
+          <FormControlLabel control={<Switch checked={darkMode} onChange={() => setDarkMode(!darkMode) }/>} label="Dark Mode" />
         </Box>
       </Drawer>
       <ToastContainer />
     </Container>
-    </>
-  );
+    </ThemeProvider>
+    );
 }
 
 export default App;
