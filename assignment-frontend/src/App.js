@@ -39,7 +39,10 @@ function App() {
   };
 
   const loadData = () => {
-    getAssignments().then(res => setAssignments(res.data)).catch(err => console.error(err));
+      getAssignments().then(res => {
+              console.log("Response:", res.data);
+              setAssignments(res.data);
+          }).catch(err => console.error(err));
   };
 
   useEffect(() => {    loadData();
