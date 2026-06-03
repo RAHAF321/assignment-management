@@ -39,10 +39,12 @@ function App() {
   };
 
   const loadData = () => {
-      getAssignments().then(res => {
-              console.log("Response:", res.data);
-              setAssignments(res.data);
-          }).catch(err => console.error(err));
+    getAssignments().then(res => {
+        console.log("DATA =", res.data);
+        console.log("TYPE =", typeof res.data);
+        console.log("ARRAY =", Array.isArray(res.data));
+        setAssignments(res.data);
+      }).catch(err => console.error(err));
   };
 
   useEffect(() => {    loadData();
