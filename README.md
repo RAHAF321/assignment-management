@@ -519,6 +519,545 @@ Deployment using:
 
 ---
 
+
+
+# Understanding Authentication, Authorization and JWT Security
+
+## Why Security Is Needed
+
+Imagine an Assignment Management application without any security.
+
+The application exposes APIs such as:
+
+```http
+GET    /assignments
+POST   /assignments
+PUT    /assignments/{id}
+DELETE /assignments/{id}
+```
+
+If these APIs are publicly accessible, anyone who knows the URL can perform operations.
+
+For example:
+
+```text
+User A creates assignments
+User B modifies them
+User C deletes them
+```
+
+The backend has no way to determine who is performing the action.
+
+This creates a fundamental problem:
+
+```text
+The system does not know the identity of the user.
+```
+
+To solve this problem, authentication was introduced.
+
+---
+
+# What Is Authentication?
+
+Authentication answers a very simple question:
+
+```text
+Who are you?
+```
+
+Consider entering an office building.
+
+At the reception desk you might be asked:
+
+```text
+What is your employee ID?
+What is your name?
+```
+
+The receptionist verifies your identity before allowing you to enter.
+
+Software systems work in exactly the same way.
+
+A user provides:
+
+```text
+Username
+Password
+```
+
+The application verifies whether the credentials are correct.
+
+Example:
+
+```text
+Username: admin
+Password: admin123
+```
+
+If the credentials match the stored user information:
+
+```text
+Authentication Successful
+```
+
+Otherwise:
+
+```text
+Authentication Failed
+```
+
+Authentication only proves identity.
+
+It does not determine permissions.
+
+---
+
+# What Is Authorization?
+
+After the system knows who the user is, a second question must be answered:
+
+```text
+What is this user allowed to do?
+```
+
+This is authorization.
+
+Consider a company.
+
+An intern and a manager can both enter the office.
+
+However:
+
+```text
+Intern
+    Can View Documents
+
+Manager
+    Can View Documents
+    Can Approve Documents
+    Can Delete Documents
+```
+
+Both users are authenticated.
+
+However, they have different permissions.
+
+Authorization determines those permissions.
+
+---
+
+# The Traditional Approach: Session-Based Authentication
+
+Historically, web applications used session-based authentication.
+
+Example:
+
+```text
+Browser
+   ↓
+Login Page
+   ↓
+Username + Password
+   ↓
+Server
+```
+
+After successful login, the server creates a session.
+
+A session is essentially:
+
+```text
+A memory record stored on the server
+```
+
+Example:
+
+```text
+Session ID = ABC123
+User = admin
+```
+
+The server returns a cookie:
+
+```text
+JSESSIONID=ABC123
+```
+
+The browser automatically sends this cookie with every request.
+
+Example:
+
+```text
+Request 1
+Cookie: JSESSIONID=ABC123
+
+Request 2
+Cookie: JSESSIONID=ABC123
+
+Request 3
+Cookie: JSESSIONID=ABC123
+```
+
+The server looks up the session and identifies the user.
+
+This approach works well for traditional server-rendered applications.
+
+---
+
+# Why Session Authentication Is Less Suitable for Modern Applications
+
+Modern applications often use separate frontend and backend systems.
+
+Example:
+
+```text
+React Frontend
+       ↓
+REST API
+       ↓
+Spring Boot Backend
+```
+
+The frontend and backend may even run on different domains.
+
+Example:
+
+```text
+Frontend
+https://app.company.com
+
+Backend
+https://api.company.com
+```
+
+Managing server-side sessions becomes more complicated.
+
+Additionally:
+
+```text
+Every logged-in user consumes server memory
+```
+
+because the server must maintain active sessions.
+
+A more scalable approach is required.
+
+---
+
+# Introduction to JWT
+
+JWT stands for:
+
+```text
+JSON Web Token
+```
+
+Instead of storing login information on the server, information is stored inside a token.
+
+Think of a JWT as a digitally signed identity card.
+
+Example:
+
+```text
+Airport Security
+       ↓
+Passport Verified
+       ↓
+Boarding Pass Issued
+```
+
+After receiving the boarding pass, passengers do not repeatedly show their passport.
+
+The boarding pass itself proves that verification already occurred.
+
+JWT works in the same way.
+
+---
+
+# Login Process Using JWT
+
+Step 1:
+
+The user submits credentials.
+
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+Step 2:
+
+The server verifies the credentials.
+
+Step 3:
+
+The server generates a JWT.
+
+Example:
+
+```text
+eyJhbGciOiJIUzI1NiJ9...
+```
+
+Step 4:
+
+The token is returned to the frontend.
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9..."
+}
+```
+
+Step 5:
+
+The frontend stores the token.
+
+Example:
+
+```text
+localStorage
+sessionStorage
+```
+
+Step 6:
+
+Every future request includes the token.
+
+```http
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+```
+
+The server verifies the token and identifies the user.
+
+No session is required.
+
+---
+
+# What Is Inside a JWT?
+
+A JWT contains three sections.
+
+```text
+HEADER.PAYLOAD.SIGNATURE
+```
+
+Example:
+
+```text
+xxxxx.yyyyy.zzzzz
+```
+
+---
+
+## Header
+
+The header contains metadata.
+
+Example:
+
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+Meaning:
+
+```text
+Algorithm = HS256
+Type = JWT
+```
+
+---
+
+## Payload
+
+The payload contains user information.
+
+Example:
+
+```json
+{
+  "sub": "admin",
+  "role": "ADMIN",
+  "exp": 1750000000
+}
+```
+
+Explanation:
+
+```text
+sub  = Subject (Username)
+
+role = User Role
+
+exp  = Expiration Time
+```
+
+This information allows the backend to understand who the user is.
+
+---
+
+## Signature
+
+The signature is the most important part.
+
+It prevents token tampering.
+
+Imagine a user attempts to modify:
+
+```json
+{
+  "role": "USER"
+}
+```
+
+to:
+
+```json
+{
+  "role": "ADMIN"
+}
+```
+
+The signature immediately becomes invalid.
+
+The backend detects the modification and rejects the token.
+
+This ensures trust and integrity.
+
+---
+
+# JWT Implementation In This Project
+
+A dedicated service named:
+
+```java
+JwtService
+```
+
+was introduced.
+
+Responsibilities:
+
+```text
+Generate JWT Tokens
+Set Expiration Time
+Embed Username
+Sign Token
+```
+
+Example:
+
+```java
+Jwts.builder()
+    .subject(username)
+    .issuedAt(new Date())
+    .expiration(...)
+    .signWith(key)
+    .compact();
+```
+
+The generated token represents the authenticated user.
+
+---
+
+# DTO Layer
+
+Authentication requests are represented using DTOs.
+
+Example:
+
+```java
+LoginRequest
+```
+
+Purpose:
+
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+Authentication responses are represented using:
+
+```java
+LoginResponse
+```
+
+Purpose:
+
+```json
+{
+  "token": "eyJhbG..."
+}
+```
+
+DTOs separate API contracts from database entities.
+
+This improves maintainability and keeps responsibilities clear.
+
+---
+
+# Current State of Implementation
+
+Implemented:
+
+✓ Spring Security Dependency
+
+✓ Security Configuration
+
+✓ CORS Configuration
+
+✓ In-Memory Users
+
+✓ JWT Dependencies
+
+✓ JwtService
+
+✓ LoginRequest DTO
+
+✓ LoginResponse DTO
+
+✓ AuthController
+
+✓ JWT Token Generation
+
+At the current stage, token generation is functioning successfully.
+
+Credential validation and endpoint protection will be implemented in the next phase.
+
+---
+
+# Future Enhancements
+
+The following security enhancements are planned:
+
+1. Validate Username and Password using AuthenticationManager
+2. Generate JWT only after successful authentication
+3. Create JWT Validation Filter
+4. Protect Assignment APIs
+5. Implement Role-Based Access Control
+6. Introduce ADMIN and USER roles
+7. Create React Login Screen
+8. Store JWT in Frontend
+9. Send Bearer Token with API Requests
+10. Integrate OAuth2 Concepts
+11. Compare JWT Architecture with SAP XSUAA and IAS
+
+The final architecture will closely resemble the security architecture used in modern enterprise applications and cloud-native microservices.
+
+
+---
+
+
 # Conclusion
 
 The Assignment Management System demonstrates how modern full-stack technologies can be combined to build practical real-world applications.
