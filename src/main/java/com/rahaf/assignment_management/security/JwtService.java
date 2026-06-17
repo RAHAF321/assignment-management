@@ -1,4 +1,4 @@
-package com.rahaf.assignment_management.service;
+package com.rahaf.assignment_management.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

@@ -2,7 +2,7 @@ package com.rahaf.assignment_management.controller;
 
 import com.rahaf.assignment_management.dto.LoginRequest;
 import com.rahaf.assignment_management.dto.LoginResponse;
-import com.rahaf.assignment_management.service.JwtService;
+import com.rahaf.assignment_management.security.JwtService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
