@@ -3,9 +3,9 @@ package com.rahaf.assignment_management.security;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
-
 import javax.crypto.SecretKey;
 import java.util.Date;
+import io.jsonwebtoken.Claims;
 
 @Service
 public class JwtService {
@@ -26,5 +26,34 @@ public class JwtService {
                    )
                    .signWith(key)
                    .compact();
+    }
+
+    public String extractUsername(String token) {
+
+        Claims claims =
+                Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+        return claims.getSubject();
+    }
+
+    public boolean isTokenValid(String token) {
+
+        try {
+
+            Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token);
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
     }
 }
