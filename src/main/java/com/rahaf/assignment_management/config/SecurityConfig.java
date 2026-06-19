@@ -34,6 +34,18 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/assignments/**")
+                        .hasAnyRole("ADMIN", "USER")
+
+                        .requestMatchers(HttpMethod.POST, "/api/assignments/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/assignments/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.DELETE, "/api/assignments/**")
+                        .hasRole("ADMIN")
+
                         .anyRequest()
                         .authenticated())
                 .addFilterBefore(
