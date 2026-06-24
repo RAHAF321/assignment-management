@@ -108,17 +108,15 @@ function App() {
     return matchesSearch && matchesStatus;
   });
 
-  return (
-
   if (!loggedIn) {
-      return (
-          <Login onLogin={() => {
-              setLoggedIn(true);
-              loadData();
-          }} />
-      );
-  }
+        return (
+            <Login onLogin={() => {
+                setLoggedIn(true);
+            }} />
+        );
+    }
 
+  return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="static" color="default">
