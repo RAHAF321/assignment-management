@@ -15,6 +15,7 @@ import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import Login from "./components/Login";
 
 function App() {
 
@@ -26,11 +27,9 @@ function App() {
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-
-  const theme = createTheme({
-      palette: {
-        mode: darkMode ? "dark" : "light"
-      }
+  const [loggedIn, setLoggedIn] = useState( !!localStorage.getItem("jwtToken") );
+  const theme = createTheme({ palette: {
+        mode: darkMode ? "dark" : "light" }
     });
 
   const handleEdit = (assignment) => {
@@ -49,8 +48,13 @@ function App() {
       .catch(err => console.error(err));
   };
 
-  useEffect(() => {    loadData();
-  }, []);
+  useEffect(() => {
+
+      if (loggedIn) {
+          loadData();
+      }
+
+  }, [loggedIn]);
 
   // DELETE HANDLER
   const handleDelete = (assignment) => {
@@ -105,6 +109,16 @@ function App() {
   });
 
   return (
+
+  if (!loggedIn) {
+      return (
+          <Login onLogin={() => {
+              setLoggedIn(true);
+              loadData();
+          }} />
+      );
+  }
+
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="static" color="default">
