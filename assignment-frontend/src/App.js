@@ -48,12 +48,17 @@ function App() {
       .catch(err => console.error(err));
   };
 
-  useEffect(() => {
+  const logout = () => {
+      localStorage.removeItem("jwtToken");
+      localStorage.removeItem("role");
+      setLoggedIn(false);
+      setAssignments([]);
+  };
 
+  useEffect(() => {
       if (loggedIn) {
           loadData();
       }
-
   }, [loggedIn]);
 
   // DELETE HANDLER
@@ -84,20 +89,11 @@ function App() {
     const newStatus = result.destination.droppableId;
 
     try {
-
-      await updateAssignmentStatus(
-        assignmentId,
-        newStatus
-      );
-
+      await updateAssignmentStatus( assignmentId,newStatus );
       loadData();
-
       toast.success("Status updated");
-
     } catch (err) {
-
       toast.error("Drag update failed");
-
     }
   };
 
@@ -109,11 +105,7 @@ function App() {
   });
 
   if (!loggedIn) {
-        return (
-            <Login onLogin={() => {
-                setLoggedIn(true);
-            }} />
-        );
+        return ( <Login onLogin={() => { setLoggedIn(true); }} /> );
     }
 
   return (
@@ -124,6 +116,9 @@ function App() {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Assignment Manager
           </Typography>
+          <Button color="inherit" onClick={logout} >
+              Logout
+          </Button>
           <IconButton color="inherit" onClick={() => setSettingsOpen(true)} >
                 <SettingsIcon />
           </IconButton>

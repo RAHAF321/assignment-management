@@ -20,7 +20,7 @@ public class UserConfig {
 
         UserDetails user = User.builder()
                                .username("user")
-                               .password("{noop}admin123")
+                               .password("{noop}user123")
                                .roles("USER")
                                .build();
 
