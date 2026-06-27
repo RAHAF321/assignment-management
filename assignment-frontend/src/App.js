@@ -16,6 +16,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Login from "./components/Login";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 function App() {
 
@@ -111,18 +113,43 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static" color="default">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Assignment Manager
-          </Typography>
-          <Button color="inherit" onClick={logout} >
-              Logout
-          </Button>
-          <IconButton color="inherit" onClick={() => setSettingsOpen(true)} >
-                <SettingsIcon />
-          </IconButton>
-        </Toolbar>
+      <AppBar position="static" elevation={0} sx={{
+              bgcolor: "white",
+              color: "#111827",
+              borderBottom: "1px solid #E5E7EB" }} >
+          <Toolbar sx={{ py: 1 }}>
+              <Box sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                      flexGrow: 1 }}>
+                  <AssignmentOutlinedIcon sx={{ color: "#2563EB", fontSize: 38 }}/>
+                  <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                      Assignment Manager
+                  </Typography>
+              </Box>
+
+              <Typography sx={{
+                      mr: 3,
+                      fontSize: 18 }}>
+                  Welcome,
+                  <span style={{
+                          color: "#2563EB",
+                          fontWeight: 700,
+                          marginLeft: 5 }}>
+                      admin
+                  </span>
+              </Typography>
+
+              <Button variant="outlined" color="error" startIcon={<LogoutOutlinedIcon />}
+                  onClick={logout}
+                  sx={{
+                      borderRadius: "12px",
+                      textTransform: "none",
+                      fontWeight: 600 }}>
+                  Logout
+              </Button>
+          </Toolbar>
       </AppBar>
 
      <Container maxWidth={false} sx={{ px: 80 }}>
