@@ -36,6 +36,24 @@ The application combines a clean user interface with a structured backend archit
 ![img_8.png](Images/img_8.png)
 ![img_9.png](Images/img_9.png)
 ![img_10.png](Images/img_10.png)
+
+---
+# Table of Contents
+
+- Project Overview
+- Application Screenshots
+- Features
+- Tech Stack
+- System Architecture
+- Authentication & Authorization
+- API Documentation
+- Project Structure
+- Installation Guide
+- Challenges Solved
+- Future Enhancements
+- Key Learnings
+- Conclusion
+
 ---
 
 # Project Overview
@@ -447,32 +465,14 @@ The backend exposes REST APIs for assignment operations.
 
 Available operations:
 
-| Method | Endpoint | Purpose |
-|----------|----------|----------|
-| POST | /assignments | Create assignment |
-| GET | /assignments | Retrieve assignments |
-| GET | /assignments/{id} | Get assignment details |
-| PUT | /assignments/{id} | Update assignment |
-| DELETE | /assignments/{id} | Delete assignment |
+| Method | Endpoint              | Purpose |
+|----------|-----------------------|----------|
+| POST | /api/assignments      | Create assignment |
+| GET | /api/assignments      | Retrieve assignments |
+| GET | /api/assignments/{id} | Get assignment details |
+| PUT | /api/assignments/{id} | Update assignment |
+| DELETE | /api/assignments/{id} | Delete assignment |
 
----
-
-# Current Project Structure
-
-```text
-assignment-management
-
-Backend
-    ├── Controller
-    ├── Service
-    ├── Repository
-    ├── Model
-
-Frontend
-    ├── Components
-    ├── Services
-    └── App.js
-```
 
 ---
 
@@ -1068,33 +1068,57 @@ Credential validation and endpoint protection will be implemented in the next ph
 
 # Future Enhancements
 
-The following security enhancements are planned:
-
-1. Validate Username and Password using AuthenticationManager
-2. Generate JWT only after successful authentication
-3. Create JWT Validation Filter
-4. Protect Assignment APIs
-5. Implement Role-Based Access Control
-6. Introduce ADMIN and USER roles
-7. Create React Login Screen
-8. Store JWT in Frontend
-9. Send Bearer Token with API Requests
-10. Integrate OAuth2 Concepts
-11. Compare JWT Architecture with SAP XSUAA and IAS
-
-The final architecture will closely resemble the security architecture used in modern enterprise applications and cloud-native microservices.
-
+- User Registration
+- Password Encryption using BCrypt
+- Refresh Tokens
+- Forgot Password
+- Email Verification
+- User Profile Management
+- File Attachments
+- Comments on Assignments
+- Team Collaboration
+- Notifications
+- Calendar Integration
+- Activity Timeline
+- Docker Support
+- Kubernetes Deployment
+- CI/CD Pipeline
+- Unit Testing
+- Integration Testing
+- Redis Caching
+- Swagger/OpenAPI Documentation
+- Audit Logging
 
 ---
 
 
 # Conclusion
 
-The Assignment Management System demonstrates how modern full-stack technologies can be combined to build practical real-world applications.
+The Assignment Management System demonstrates the development of a modern full-stack web application using Spring Boot, React, MySQL, and JWT-based authentication.
 
-The project not only implements CRUD operations but also focuses on user experience through dashboard analytics, filtering, visual organization, and scalable architecture.
+Throughout this project, several real-world software engineering concepts were implemented, including layered architecture, RESTful API development, Spring Security, JWT authentication, role-based authorization, responsive UI design, drag-and-drop task management, dashboard analytics, search and filtering, and dark mode support.
 
-It serves as a strong learning project as well as a foundation for future enterprise-level enhancements.
+The project was built not only to implement CRUD operations but also to understand how enterprise applications are structured, secured, and maintained. It provided hands-on experience with frontend-backend integration, API communication, authentication workflows, and user experience design.
+
+This application serves as a strong foundation for building larger enterprise systems and demonstrates practical implementation of concepts commonly used in modern software development.
+
+---
+
+# Key Learnings
+
+This project helped strengthen my understanding of:
+
+- Full-stack application development
+- Spring Boot REST API development
+- Spring Security and JWT Authentication
+- Role-Based Access Control (RBAC)
+- React Hooks and Component Architecture
+- Material UI for responsive interfaces
+- Axios for frontend-backend communication
+- Drag-and-drop implementation using Hello Pangea DnD
+- Layered architecture and clean code practices
+- Database design with MySQL and Spring Data JPA
+- Debugging, testing, and API integration
 
 ---
 
