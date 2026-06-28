@@ -18,6 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Login from "./components/Login";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import AddIcon from "@mui/icons-material/Add";
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("ALL");
   const [openDialog, setOpenDialog] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -198,7 +200,26 @@ function App() {
       </Box>
 
       <Dashboard assignments={assignments} />
-      <AssignmentForm refresh={loadData} editingAssignment={editingAssignment} clearEdit={() => setEditingAssignment(null)} />
+
+      <Box sx={{ mb: 3 }}>
+          <Button variant="contained" startIcon={<AddIcon />} onClick={() => setOpenForm(true)}
+              sx={{
+                  backgroundColor: "#2563EB",
+                  borderRadius: "12px",
+                  px: 3,
+                  py: 1.5,
+                  textTransform: "none",
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  boxShadow: 2,
+                  "&:hover": {
+                      backgroundColor: "#1D4ED8"
+                  }
+              }}
+          >
+              Add Assignment
+          </Button>
+      </Box>
 
       <KanbanBoard
         assignments={filteredAssignments}
