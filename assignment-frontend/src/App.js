@@ -38,7 +38,7 @@ function App() {
 
   const handleEdit = (assignment) => {
     setEditingAssignment(assignment);
-    window.scrollTo({top: 0, behavior: "smooth" });
+    setOpenForm(true);
   };
 
   const loadData = () => {
@@ -151,6 +151,17 @@ function App() {
                       fontWeight: 600 }}>
                   Logout
               </Button>
+              <IconButton
+                  onClick={() => setSettingsOpen(true)}
+                  sx={{
+                      ml: 2,
+                      color: "#6B7280",
+                      "&:hover": {
+                          backgroundColor: "#F3F4F6"
+                      }
+                  }} >
+                  <SettingsIcon />
+              </IconButton>
           </Toolbar>
       </AppBar>
 
@@ -221,6 +232,18 @@ function App() {
           </Button>
       </Box>
 
+      <Dialog open={openForm} onClose={() => { setOpenForm(false); setEditingAssignment(null); }}
+          fullWidth
+          maxWidth="sm">
+          <AssignmentForm refresh={loadData}
+              editingAssignment={editingAssignment}
+              clearEdit={() => {
+                  setEditingAssignment(null);
+                  setOpenForm(false);
+              }}
+          />
+      </Dialog>
+
       <KanbanBoard
         assignments={filteredAssignments}
         onEdit={handleEdit}
@@ -242,12 +265,13 @@ function App() {
 
       </Dialog>
       <Drawer anchor="right" open={settingsOpen} onClose={() => setSettingsOpen(false)} >
-        <Box sx={{ width: 250, p: 2 }}>
-          <Typography variant="h6">
+        <Box sx={{ width: 320, p: 3 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700, mb: 3 }}>
             Settings
           </Typography>
 
-          <FormControlLabel control={<Switch checked={darkMode} onChange={() => setDarkMode(!darkMode) }/>} label="Dark Mode" />
+          <FormControlLabel control={<Switch checked={darkMode}
+          onChange={() => setDarkMode(!darkMode) }/>} label="Dark Mode" sx={{ fontWeight: 600 }}/>
         </Box>
       </Drawer>
       <ToastContainer />
