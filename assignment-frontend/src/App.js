@@ -118,10 +118,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static" elevation={0} sx={{
-              bgcolor: "white",
-              color: "#111827",
-              borderBottom: "1px solid #E5E7EB" }} >
+      <AppBar position="static" elevation={0}
+           sx={{
+              bgcolor: "background.paper",
+              color: "text.primary",
+              borderBottom: 1,
+              borderColor: "divider"
+           }}
+           >
           <Toolbar sx={{ py: 1 }}>
               <Box sx={{
                       display: "flex",
@@ -168,7 +172,7 @@ function App() {
           </Toolbar>
       </AppBar>
 
-     <Container maxWidth={false} sx={{ px: 80 }}>
+     <Container maxWidth={false} sx={{ px: 4 }}>
       <Box mt={4} mb={3}>
 
       <Dashboard assignments={assignments} />
@@ -221,7 +225,7 @@ function App() {
                       width: 360,
                       "& .MuiOutlinedInput-root": {
                           borderRadius: "14px",
-                          background: "#fff"
+                          background: "background.paper"
                       }
                   }}
                   InputProps={{
@@ -241,7 +245,7 @@ function App() {
                   sx={{
                       width:200,
                       borderRadius:"14px",
-                      bgcolor:"white"
+                      bgcolor:"background.paper"
                   }}
               >
                   <MenuItem value="ALL">All Status</MenuItem>
