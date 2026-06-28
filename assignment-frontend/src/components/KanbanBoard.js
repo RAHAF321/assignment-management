@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, Box, Chip } from "@mui/material";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { useTheme } from "@mui/material/styles";
 
 function KanbanBoard({ assignments, onEdit, onDelete, onDragEnd}) {
   const todo = assignments.filter(a => a.status === "TODO")
@@ -35,6 +36,8 @@ function KanbanBoard({ assignments, onEdit, onDelete, onDragEnd}) {
 
 function Column({ title, items, onEdit, onDelete }) {
 
+  const theme = useTheme();
+
   return (
     <Droppable droppableId={title}>
       {(provided) => (
@@ -47,11 +50,21 @@ function Column({ title, items, onEdit, onDelete }) {
           minHeight: "650px",
 
           background:
-            title === "TODO"
-              ? "#F5F7FA"
-              : title === "IN_PROGRESS"
-              ? "#EDF6FF"
-              : "#F2FBF2"
+            theme.palette.mode === "light"
+              ? (
+                  title === "TODO"
+                    ? "#F5F7FA"
+                    : title === "IN_PROGRESS"
+                    ? "#EDF6FF"
+                    : "#F2FBF2"
+                )
+              : (
+                  title === "TODO"
+                    ? "#252525"
+                    : title === "IN_PROGRESS"
+                    ? "#1B2A42"
+                    : "#1D3323"
+                )
         }}
       >
       <Box

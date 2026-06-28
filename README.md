@@ -7,6 +7,34 @@ This project provides an intuitive Kanban-style interface where assignments are 
 The application combines a clean user interface with a structured backend architecture to create a scalable task management system.
 
 ---
+# Application Screenshots
+
+## Login Page
+![img.png](Images/img.png)
+---
+
+## Dashboard
+![img_1.png](Images/img_1.png)
+![img_2.png](Images/img_2.png)
+---
+
+## Add Assignment Dialog
+
+(image)
+
+---
+
+## Kanban Board
+
+(image)
+
+---
+
+## Dark Mode
+
+(image)
+
+---
 
 # Project Overview
 
