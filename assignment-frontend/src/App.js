@@ -19,6 +19,9 @@ import Login from "./components/Login";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import InputAdornment from "@mui/material/InputAdornment";
 
 function App() {
 
@@ -167,69 +170,88 @@ function App() {
 
      <Container maxWidth={false} sx={{ px: 80 }}>
       <Box mt={4} mb={3}>
-      <Box
-        sx={{
-          display:"flex",
-          gap:2,
-          alignItems:"center",
-          justifyContent:"space-between",
-          mb:4,
-          p:2,
-          bgcolor:"background.paper",
-          borderRadius:"16px",
-          boxShadow:2
-        }}
-      >
-      <TextField
-        label="Search assignments..."
-        variant="outlined"
-        size="small"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        sx={{
-          flex:1,
-          "& .MuiOutlinedInput-root": {
-            bgcolor:"background.default"
-          }
-        }}
-      />
-
-      <Select
-        value={filterStatus}
-        size="small"
-        onChange={(e) => setFilterStatus(e.target.value)}
-        sx={{
-          minWidth:180,
-          bgcolor:"background.default"
-        }}
-      >
-          <MenuItem value="ALL"> All Status </MenuItem>
-          <MenuItem value="TODO"> TODO </MenuItem>
-          <MenuItem value="IN_PROGRESS"> IN PROGRESS </MenuItem>
-          <MenuItem value="COMPLETED"> COMPLETED </MenuItem>
-      </Select>
-      </Box>
 
       <Dashboard assignments={assignments} />
 
-      <Box sx={{ mb: 3 }}>
-          <Button variant="contained" startIcon={<AddIcon />} onClick={() => setOpenForm(true)}
+      <Box
+          sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 4
+          }} >
+
+          {/* Left Side */}
+          <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={() => setOpenForm(true)}
               sx={{
-                  backgroundColor: "#2563EB",
+                  bgcolor: "#2563EB",
+                  px: 4,
+                  py: 1.4,
                   borderRadius: "12px",
-                  px: 3,
-                  py: 1.5,
                   textTransform: "none",
                   fontWeight: 600,
-                  fontSize: "16px",
-                  boxShadow: 2,
+                  fontSize: 16,
+                  boxShadow: 3,
                   "&:hover": {
-                      backgroundColor: "#1D4ED8"
+                      bgcolor: "#1D4ED8"
                   }
               }}
           >
               Add Assignment
           </Button>
+
+          {/* Right Side */}
+          <Box
+              sx={{
+                  display: "flex",
+                  gap: 2,
+                  alignItems: "center"
+              }}
+          >
+
+              <TextField
+                  placeholder="Search by title..."
+                  size="small"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  sx={{
+                      width: 360,
+                      "& .MuiOutlinedInput-root": {
+                          borderRadius: "14px",
+                          background: "#fff"
+                      }
+                  }}
+                  InputProps={{
+                      startAdornment: (
+                          <InputAdornment position="start">
+                              <SearchIcon color="action" />
+                          </InputAdornment>
+                      )
+                  }}
+              />
+
+              <Select
+                  value={filterStatus}
+                  onChange={(e)=>setFilterStatus(e.target.value)}
+                  size="small"
+                  displayEmpty
+                  sx={{
+                      width:200,
+                      borderRadius:"14px",
+                      bgcolor:"white"
+                  }}
+              >
+                  <MenuItem value="ALL">All Status</MenuItem>
+                  <MenuItem value="TODO">TODO</MenuItem>
+                  <MenuItem value="IN_PROGRESS">IN PROGRESS</MenuItem>
+                  <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+              </Select>
+
+          </Box>
+
       </Box>
 
       <Dialog open={openForm} onClose={() => { setOpenForm(false); setEditingAssignment(null); }}
