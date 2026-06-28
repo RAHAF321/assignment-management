@@ -16,24 +16,26 @@ The application combines a clean user interface with a structured backend archit
 ## Dashboard
 ![img_1.png](Images/img_1.png)
 ![img_2.png](Images/img_2.png)
+![img.png](Images/img_13.png)
+![img_1.png](Images/img_12.png)
+![img_2.png](Images/img_11.png)
 ---
 
 ## Add Assignment Dialog
-
-(image)
-
+![img_3.png](Images/img_3.png)
 ---
 
 ## Kanban Board
-
-(image)
-
+![img_4.png](Images/img_4.png)
+![img_5.png](Images/img_5.png)
 ---
 
-## Dark Mode
-
-(image)
-
+## Search and Filter
+![img_6.png](Images/img_6.png)
+![img_7.png](Images/img_7.png)
+![img_8.png](Images/img_8.png)
+![img_9.png](Images/img_9.png)
+![img_10.png](Images/img_10.png)
 ---
 
 # Project Overview
