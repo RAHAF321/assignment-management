@@ -42,15 +42,58 @@ function Column({ title, items, onEdit, onDelete }) {
         ref={provided.innerRef}
         {...provided.droppableProps}
         sx={{
-          bgcolor: "background.paper",
           p: 2,
-          borderRadius: "10px",
-          minHeight: "300px"
+          borderRadius: "20px",
+          minHeight: "650px",
+
+          background:
+            title === "TODO"
+              ? "#F5F7FA"
+              : title === "IN_PROGRESS"
+              ? "#EDF6FF"
+              : "#F2FBF2"
         }}
       >
-      <Typography variant="h6" align="center" gutterBottom sx={{ color: "text.primary", fontWeight: "bold" }} >
-        {title}
-      </Typography>
+      <Box
+          sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2
+          }}
+      >
+
+          <Box
+              sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1
+              }}
+          >
+
+              <Box
+                  sx={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: "50%",
+                      bgcolor:
+                          title === "TODO"
+                              ? "#9CA3AF"
+                              : title === "IN_PROGRESS"
+                              ? "#2563EB"
+                              : "#16A34A"
+                  }}
+              />
+              <Typography
+                  variant="h6"
+                  sx={{
+                      fontWeight: 700
+                  }}
+              >
+                  {title.replace("_", " ")} ({items.length})
+              </Typography>
+          </Box>
+      </Box>
 
       {items.map((item, index) => (
 
@@ -58,7 +101,7 @@ function Column({ title, items, onEdit, onDelete }) {
           {(provided) => (
             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} >
 
-              <Card sx={{ mb: 2, borderRadius: "14px", boxShadow: 3, transition: "0.3s", "&:hover": { transform: "translateY(-4px)" } }} >
+              <Card sx={{ mb: 2, minHeight: 300, display: "flex", flexDirection: "column", borderRadius: "14px", boxShadow: 3, transition: "0.3s", "&:hover": { transform: "translateY(-4px)" } }} >
                 <CardContent>
                   <Typography variant="h6" style={{ fontWeight: "bold" }} >
                     {item.title}
